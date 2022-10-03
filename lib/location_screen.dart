@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class LocationScreen extends StatefulWidget {
-  const LocationScreen({super.key});
 
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
