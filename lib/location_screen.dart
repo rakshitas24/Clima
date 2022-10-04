@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'weather.dart';
+import 'city_screen.dart';
 
 class LocationScreen extends StatefulWidget {
-
   LocationScreen({this.locationWeather});
 
   final locationWeather;
@@ -15,29 +15,35 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-
   WeatherModel weather = WeatherModel();
   int temperature = 0;
   String weatherIcon = '';
   String cityName = '';
   String message = '';
 
-  @override 
+  @override
   void initState() {
     super.initState();
   }
 
   void updateUI(dynamic weatherData) {
     setState(() {
-    double temp = weatherData['main']['temp'];
-    temperature = temp.toInt();
-    var condition = weatherData['weather'][0]['id'];
-    weatherIcon = weather.getWeatherIcon(condition);
-    message = weather.getMessage(temperature);
-    cityName = weatherData['name'];
+      if (weatherData == null) {
+        temperature = 0;
+        weatherIcon = 'Error';
+        message = 'Unable to get weather data';
+        cityName = '';
+        return;
+      }
+      double temp = weatherData['main']['temp'];
+      temperature = temp.toInt();
+      var condition = weatherData['weather'][0]['id'];
+      weatherIcon = weather.getWeatherIcon(condition);
+      message = weather.getMessage(temperature);
+      cityName = weatherData['name'];
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,15 +66,27 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var weatherData = await weather.getLocationWeather();
+                      updateUI(weatherData);
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
-                    child: Icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CityScreen();
+                          },
+                        ),
+                      );
+                    },
+                    child: Icon( 
                       Icons.location_city,
                       size: 50.0,
                     ),

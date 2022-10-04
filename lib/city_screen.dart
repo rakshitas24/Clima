@@ -30,19 +30,27 @@ class _CityScreenState extends State<CityScreen> {
                   child: Icon(
                     Icons.arrow_back_ios,
                     size: 50.0,
+                    color: Colors.white,
                   ),
                 ),
               ),
               Container(
                 padding: EdgeInsets.all(20.0),
-                child: null,
+                child: TextField(
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                  decoration: kTextFieldInputDecoration
+                ),
               ),
               TextButton(
                 onPressed: () {},
-                child: Text(
-                  'Get Weather',
-                  style: kButtonTextStyle,
-                ),
+                child: Text('Get Weather',
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontFamily: 'Spartan MB',
+                      color: Colors.white,
+                    )),
               ),
             ],
           ),
